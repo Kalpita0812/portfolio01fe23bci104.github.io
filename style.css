@@ -102,7 +102,7 @@ blockquote {
 /* Responsive Design */
 @media (max-width: 600px) {
     section {
-        padding: 1.5rem;
+        padding: 1.51rem;
     }
 
     header {

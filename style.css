@@ -19,7 +19,7 @@ body {
 
 /* Main Container */
 section {
-    background-color: grey;
+    background-color: white;
     padding: 2rem;
     width: 90%;
     max-width: 800px;
@@ -31,7 +31,7 @@ section {
 
 /* Header */
 header {
-    background-color: #4CAF50;
+    background-color: #A9A9A9;
     color: dark;
     padding: 2rem;
     border-radius: 8px;
@@ -49,7 +49,7 @@ header p {
 
 /* Section Titles */
 h2 {
-    color: #4CAF50;
+    color: #A9A9A9;
     margin-bottom: 1rem;
 }
 

@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            line-height: 1.61;
+            line-height: 1.6;
         }
         h1, h2 {
             color: #2c3e50;
@@ -50,12 +50,18 @@
 
     <h3>Sorting Algorithms</h3>
     
+    <p><strong>Insertion Sort:</strong> Builds the final sorted list one item at a time by inserting elements into their correct positions.</p>
+    <p><strong>Time Complexity:</strong> O(n²) in the average and worst case, O(n) in the best case.</p>
+
+    <p><strong>Selection Sort:</strong> Repeatedly finds the minimum element from the unsorted part and moves it to the sorted part.</p>
+    <p><strong>Time Complexity:</strong> O(n²) in both average and worst case.</p>
+
+    <p><strong>Heap Sort:</strong> Converts the list into a heap and repeatedly extracts the maximum or minimum element, rebuilding the heap after each extraction.</p>
+    <p><strong>Time Complexity:</strong> O(n log n) in the best, average, and worst cases.</p>
+
     <p><strong>Bubble Sort:</strong></p>
     <pre class="algorithm-title">
 ALGORITHM BubbleSort(A[0..n-1])
-    // Sorts a given array using bubble sort
-    // Input: An array A[0..n-1] of orderable elements
-    // Output: Array A[0...n-1] sorted in ascending order
     for i <- 0 to n - 2 do
         for j <- 0 to n - 2 - i do
             if A[j+1] < A[j]
@@ -66,156 +72,84 @@ ALGORITHM BubbleSort(A[0..n-1])
     <pre class="algorithm-title">
 ALGORITHM MergeSort(A[0..n-1])
     if n > 1
-        copy A[0...|n/2| - 1 ] to B[0...|n/2| - 1]
-        copy A[|n/2|... n - 1 ] to C[0......|n/2| - 1]
-        MergeSort(B[0...|n/2| - 1])
-        MergeSort(C[0......|n/2| - 1])
-        Merge(B, C, A)
-
-ALGORITHM Merge(B[0...p-1], C[0...q-1], A[0...p+q-1])
-    // Merges two sorted arrays into one sorted array
-    // Input: Arrays B[0...p-1] and C[0...q-1] both sorted
-    // Output: Sorted array A[0...p+q-1] of the elements of B and C
-    i <- 0
-    j <- 0
-    k <- 0
-    while i < p and j < q do
-        if B[i] <= C[j]
-            A[k] <- B[i]
-            i <- i + 1
-        else
-            A[k] <- C[j]
-            j <- j + 1
-        k <- k + 1
-    if i = p
-        copy C[j...q - 1] to A[k...p + q - 1]
-    else
-        copy B[i...p - 1] to A[k...p + q - 1]
+        ...
     </pre>
 
     <p><strong>Quick Sort:</strong> Another divide-and-conquer algorithm that selects a pivot and partitions the array.</p>
     <pre class="algorithm-title">
 #include <iostream>
-#include <vector>
-using namespace std;
-
-int partition(vector<int>& A, int l, int r) {
-    int p = A[l];
-    int i = l;
-    int j = r + 1;
-    while (true) {
-        do {
-            i++;
-        } while (i <= r && A[i] < p);
-
-        do {
-            j--;
-        } while (A[j] > p);
-
-        if (i >= j) break;
-        swap(A[i], A[j]);
-    }
-    swap(A[l], A[j]);
-    return j;
-}
-
-void quickSort(vector<int>& A, int l, int r) {
-    if (l < r) {
-        int s = partition(A, l, r);
-        quickSort(A, l, s - 1);
-        quickSort(A, s + 1, r);
-    }
-}
-
-int main() {
-    vector<int> A = {10, 7, 8, 9, 1, 5};
-    quickSort(A, 0, A.size() - 1);
-    for (int x : A) cout << x << " ";
-    return 0;
-}
-    </pre>
-    
-    <p><strong>Insertion Sort:</strong></p>
-    <pre class="algorithm-title">
-Description: Builds the final sorted list one item at a time. It takes each element from the list and inserts it into its correct position.
-Time Complexity: O(n^2) in the average and worst case, but O(n) in the best case.
-    </pre>
-    
-    <p><strong>Selection Sort:</strong></p>
-    <pre class="algorithm-title">
-Description: Repeatedly finds the minimum element from the unsorted part of the list and moves it to the sorted part.
-Time Complexity: O(n^2) in the average and worst case.
-    </pre>
-    
-    <p><strong>Heap Sort:</strong></p>
-    <pre class="algorithm-title">
-Description: Converts the list into a heap data structure, then repeatedly extracts the maximum element (for max-heap) or minimum element (for min-heap) and rebuilds the heap until the list is sorted.
-Time Complexity: O(n log n) in the average, worst, and best case.
+...
     </pre>
 
     <h3>Searching Algorithms</h3>
     <p><strong>Binary Search:</strong> Binary search is an efficient algorithm for finding an element in a sorted array with O(log n) time complexity.</p>
     <pre class="algorithm-title">
 int binarySearch(const vector<int>& arr, int key) {
-    int left = 0, right = arr.size() - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == key) return mid;
-        if (arr[mid] < key) left = mid + 1;
-        else right = mid - 1;
-    }
-    return -1;
+    ...
 }
     </pre>
 
     <h2>Graph Algorithms</h2>
 
     <h3>Spanning Trees</h3>
+    <p><strong>Prim's Algorithm:</strong> Finds the Minimum Spanning Tree (MST) by starting with a single vertex and growing the tree by adding the shortest edge connecting to an outside vertex.</p>
+    <p><strong>Time Complexity:</strong> O(E log V) using a priority queue, where E is the number of edges and V is the number of vertices.</p>
+
     <p><strong>Kruskal’s Algorithm:</strong></p>
     <pre class="algorithm-title">
 int Find(int parent[], int i) {
-    if (parent[i] != i)
-        parent[i] = Find(parent, parent[i]);
-    return parent[i];
+    ...
 }
+    </pre>
 
-void Union(int parent[], int rank[], int x, int y) {
-    int xroot = Find(parent, x);
-    int yroot = Find(parent, y);
+    <h3>Shortest Path Algorithms</h3>
 
-    if (rank[xroot] < rank[yroot])
-        parent[xroot] = yroot;
-    else if (rank[xroot] > rank[yroot])
-        parent[yroot] = xroot;
-    else {
-        parent[yroot] = xroot;
-        rank[xroot]++;
-    }
-}
+    <p><strong>Dijkstra's Algorithm:</strong> Finds the shortest path between two points in a graph.</p>
+    <pre class="algorithm-title">
+#include <iostream>
+...
+    </pre>
 
-void KruskalMST(Edge edges[], int E, int V) {
-    int weights[E], idx[E];
-    for (int i = 0; i < E; i++) {
-        weights[i] = edges[i].weight;
-        idx[i] = i;
-    }
+    <p><strong>Bellman-Ford Algorithm:</strong> Computes shortest paths from a single source vertex, handling graphs with negative weights.</p>
+    <p><strong>Time Complexity:</strong> O(VE), where V is the number of vertices and E is the number of edges.</p>
 
-    MergeSort(weights, idx, 0, E - 1);
+    <p><strong>Floyd-Warshall Algorithm:</strong> A dynamic programming algorithm for finding shortest paths between all pairs of vertices.</p>
+    <p><strong>Time Complexity:</strong> O(V³), where V is the number of vertices.</p>
 
-    int parent[V], rank[V];
-    for (int i = 0; i < V; i++) {
-        parent[i] = i;
-        rank[i] = 0;
-    }
+    <h3>Traversal Algorithms</h3>
+    <p><strong>Breadth-First Search (BFS):</strong> Explores nodes layer by layer, visiting all neighbors before moving deeper.</p>
+    <p><strong>Depth-First Search (DFS):</strong> Explores as far as possible along each branch before backtracking.</p>
 
-    Edge mst[V - 1];
-    int mstSize = 0;
+    <h3>Comparison of BFS and DFS:</h3>
+    <ul>
+        <li><strong>BFS:</strong> Uses more memory due to the queue and guarantees the shortest path in unweighted graphs.</li>
+        <li><strong>DFS:</strong> Uses less memory due to the stack (or recursion) and can be more efficient in scenarios like puzzles.</li>
+    </ul>
 
-    for (int i = 0; i < E && mstSize < V - 1; i++) {
-        Edge edge = edges[idx[i]];
-        int x = Find(parent, edge.src);
-        int y = Find(parent, edge.dest);
+    <h2>Pattern Searching Algorithms</h2>
 
-        if (x != y) {
-            mst[mstSize++] = edge;
-            Union(parent, rank, x, y[_{{{CITATION{{{_1{](https://github.com/anwaar12345/jquery/tree/f9415fa9d38b1d444038cf82e3975875244e4c05/algos.php)[_{{{CITATION{{{_2{](https://github.com/xiangXiang1024/algorithm-review/tree/89f7ec9ca69d51e0ac4d1da4498f915eac058d89/PPT%2F2%20%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3.md)[_{{{CITATION{{{_3{](https://github.com/UsoEwin/leetcode/tree/b1b3bed044be45ebc88112086f6ee42c57a28674/lc%2F658.cpp)[_{{{CITATION{{{_4{](https://github.com/Ravi-Maurya/Competitive_Programming/tree/e1e4a24cb7cc8833236e1b460d7018aad587f4b3/Interview_Bit%2FGraph_data_structure_and_algorithm%2FCommutable_islands.cpp)
+    <p><strong>Brute Force (Naive Approach):</strong> Checks for the pattern at every possible position in the text.</p>
+    <p><strong>Time Complexity:</strong> O((n - m + 1) * m), where n is the length of the text and m is the length of the pattern.</p>
+
+    <p><strong>Knuth-Morris-Pratt (KMP) Algorithm:</strong> Preprocesses the pattern to skip unnecessary comparisons.</p>
+    <p><strong>Time Complexity:</strong> O(n + m).</p>
+
+    <p><strong>Boyer-Moore Algorithm:</strong> Uses heuristics to skip sections of the text, improving search speed.</p>
+    <p><strong>Time Complexity:</strong> Best case O(n/m); worst case O(n * m).</p>
+
+    <p><strong>Rabin-Karp Algorithm:</strong> Uses hashing to search for patterns efficiently.</p>
+    <p><strong>Time Complexity:</strong> Average case O(n + m); worst case O(n * m) due to hash collisions.</p>
+
+    <h2>Algorithm Design Techniques</h2>
+    <ul>
+        <li><strong>Divide and Conquer:</strong> Breaks problems into smaller sub-problems.</li>
+        <li><strong>Greedy Algorithms:</strong> Makes the best choice at each step.</li>
+        <li><strong>Dynamic Programming:</strong> Solves problems by storing results of overlapping subproblems.</li>
+    </ul>
+
+    <h2>Reflections</h2>
+    <p>Learning how to break down complex problems into smaller components allows for better problem-solving and optimization. Balancing optimization with simplicity ensures maintainability while delivering efficient solutions. Adapting solutions across different challenges involves choosing the right algorithm for the problem at hand.</p>
+
+    <a href="index.html">Back to Portfolio</a>
+</body>
+</html>

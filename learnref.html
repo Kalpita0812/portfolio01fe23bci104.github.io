@@ -29,18 +29,6 @@
             font-weight: bold;
             color: #2980b9;
         }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            background-color: #2980b9;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
-        a:hover {
-            background-color: #3498db;
-        }
     </style>
 </head>
 <body>
@@ -104,7 +92,7 @@ ALGORITHM Merge(B[0...p-1], C[0...q-1], A[0...p+q-1])
     else
         copy B[i...p - 1] to A[k...p + q - 1]
     </pre>
-    
+
     <p><strong>Quick Sort:</strong> Another divide-and-conquer algorithm that selects a pivot and partitions the array.</p>
     <pre class="algorithm-title">
 #include <iostream>
@@ -147,33 +135,134 @@ int main() {
 }
     </pre>
 
-    <h3>Pattern Searching Algorithms</h3>
+    <h2>Graph Algorithms</h2>
 
-    <div class="algorithm">
-        <h4>1. Brute Force (Naive Approach)</h4>
-        <p><strong>Description:</strong> This algorithm checks for the pattern at every possible position in the text. It slides the pattern one by one and checks for a match at each position.</p>
-        <p><span class="time-complexity">Time Complexity:</span> O((n-m+1) * m) where n is the length of the text and m is the length of the pattern.</p>
-    </div>
+    <h3>Spanning Trees</h3>
+    <p><strong>Prim's Algorithm:</strong> Used to find the Minimum Spanning Tree (MST) for a weighted, undirected graph. It starts with a single vertex and grows the spanning tree by adding the shortest edge that connects a vertex in the tree to a vertex outside the tree.</p>
+    <p><strong>Time Complexity:</strong> O(E log V) using a priority queue, where E is the number of edges and V is the number of vertices.</p>
 
-    <div class="algorithm">
-        <h4>2. Knuth-Morris-Pratt (KMP) Algorithm</h4>
-        <p><strong>Description:</strong> KMP preprocesses the pattern to create a partial match table (also known as the "longest prefix suffix" (LPS) array). This allows the algorithm to skip portions of the text without rechecking characters, making it more efficient.</p>
-        <p><span class="time-complexity">Time Complexity:</span> O(n + m) where n is the length of the text and m is the length of the pattern.</p>
-    </div>
+    <p><strong>Kruskal’s Algorithm:</strong></p>
+    <pre class="algorithm-title">
+int Find(int parent[], int i) {
+    if (parent[i] != i)
+        parent[i] = Find(parent, parent[i]);
+    return parent[i];
+}
 
-    <div class="algorithm">
-        <h4>3. Boyer-Moore Algorithm</h4>
-        <p><strong>Description:</strong> Boyer-Moore uses two main heuristics (the Bad Character Heuristic and the Good Suffix Heuristic) to skip sections of the text, moving from right to left. This makes the search faster by potentially skipping large sections of the text.</p>
-        <p><span class="time-complexity">Time Complexity:</span> Best case is O(n/m), but in the worst case it is O(n * m). Average performance is often better than KMP.</p>
-    </div>
+void Union(int parent[], int rank[], int x, int y) {
+    int xroot = Find(parent, x);
+    int yroot = Find(parent, y);
 
-    <div class="algorithm">
-        <h4>4. Rabin-Karp Algorithm</h4>
-        <p><strong>Description:</strong> Rabin-Karp uses hashing to find any one of a set of pattern strings in a text. It computes a hash for the pattern and a hash for a substring of the text, and compares these hashes. If the hashes match, it then checks for exact matching to avoid false positives.</p>
-        <p><span class="time-complexity">Time Complexity:</span> Average case O(n + m), but worst case can be O(n * m) due to hash collisions.</p>
-    </div>
+    if (rank[xroot] < rank[yroot])
+        parent[xroot] = yroot;
+    else if (rank[xroot] > rank[yroot])
+        parent[yroot] = xroot;
+    else {
+        parent[yroot] = xroot;
+        rank[xroot]++;
+    }
+}
 
-    <a href="index.html">Back to Portfolio</a>
+void KruskalMST(Edge edges[], int E, int V) {
+    int weights[E], idx[E];
+    for (int i = 0; i < E; i++) {
+        weights[i] = edges[i].weight;
+        idx[i] = i;
+    }
+
+    MergeSort(weights, idx, 0, E - 1);
+
+    int parent[V], rank[V];
+    for (int i = 0; i < V; i++) {
+        parent[i] = i;
+        rank[i] = 0;
+    }
+
+    Edge mst[V - 1];
+    int mstSize = 0;
+
+    for (int i = 0; i < E && mstSize < V - 1; i++) {
+        Edge edge = edges[idx[i]];
+        int x = Find(parent, edge.src);
+        int y = Find(parent, edge.dest);
+
+        if (x != y) {
+            mst[mstSize++] = edge;
+            Union(parent, rank, x, y);
+        }
+    }
+
+    cout << "Edges in the Minimum Spanning Tree:\n";
+    int cost = 0;
+    for (int i = 0; i < mstSize; i++) {
+        cout << mst[i].src << " -- " << mst[i].dest << " == " << mst[i].weight << endl;
+        cost += mst[i].weight;
+    }
+    cout << "Cost = " << cost << endl;
+}
+    </pre>
+
+    <h3>Shortest Path Algorithms</h3>
+    <p><strong>Dijkstra's Algorithm:</strong> Dijkstra's algorithm finds the shortest path between two points in a graph, used in GPS navigation and routing applications.</p>
+    <pre class="algorithm-title">
+#include <iostream>
+#include <vector>
+#define MAX 9999
+using namespace std;
+
+class dijkstra {
+public:
+    int dist[100];
+    int path[100];
+    int visited[100] = {0};
+    int v;
+    int src;
+
+    void read(int cost[50][50]);
+    void initialize(int cost[50][50]);
+};
+
+void dijkstra::initialize(int cost[50][50]) {
+    for (int i = 0; i < v; i++) {
+        path[i] = src;
+        dist[i] = cost[src][i];
+        visited[i] = 0;
+    }
+    visited[src] = 1;
+}
+
+void dijkstra::read(int cost[50][50]) {
+    cout << "Enter the cost matrix:" << endl;
+    for (int i = 0; i < v; i++) {
+        for (int j = 0; j < v; j++) {
+            cin >> cost[i][j];
+        }
+    }
+}
+
+int main() {
+    int cost[50][50];
+    dijkstra d;
+
+    cout << "Enter the number of vertices: ";
+    cin >> d.v;
+
+    d.read(cost);
+
+    cout << "Enter the source vertex: ";
+    cin >> d.src;
+
+    d.initialize(cost);
+
+    cout << "Initialized distances from source: ";
+    for (int i = 0; i < d.v; i++) {
+        cout << d.dist[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+    </pre>
 
     <h2>Algorithm Design Techniques</h2>
     <ul>
@@ -186,6 +275,7 @@ int main() {
     <p>Learning how to break down complex problems into smaller components allows for better problem-solving and optimization. Balancing optimization with simplicity ensures maintainability while delivering efficient solutions. Adapting solutions across different challenges involves choosing the right algorithm for the problem at hand.</p>
 </body>
 </html>
+
 
 
 

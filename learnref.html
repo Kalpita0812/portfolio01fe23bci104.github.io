@@ -29,6 +29,18 @@
             font-weight: bold;
             color: #2980b9;
         }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #3498db;
+        }
     </style>
 </head>
 <body>
@@ -92,7 +104,8 @@ ALGORITHM Merge(B[0...p-1], C[0...q-1], A[0...p+q-1])
     else
         copy B[i...p - 1] to A[k...p + q - 1]
     </pre>
-            <p><strong>Quick Sort:</strong> Another divide-and-conquer algorithm that selects a pivot and partitions the array.</p>
+    
+    <p><strong>Quick Sort:</strong> Another divide-and-conquer algorithm that selects a pivot and partitions the array.</p>
     <pre class="algorithm-title">
 #include <iostream>
 #include <vector>
@@ -134,179 +147,9 @@ int main() {
 }
     </pre>
 
+    <h3>Pattern Searching Algorithms</h3>
 
-    <p><strong>Insertion Sort:</strong> Builds the final sorted list one item at a time. It takes each element from the list and inserts it into its correct position.</p>
-    <p><strong>Time Complexity:</strong> O(n²) in the average and worst case, but O(n) in the best case.</p>
-
-    <p><strong>Selection Sort:</strong> Repeatedly finds the minimum element from the unsorted part of the list and moves it to the sorted part.</p>
-    <p><strong>Time Complexity:</strong> O(n²) in the average and worst case.</p>
-
-    <p><strong>Heap Sort:</strong> Converts the list into a heap data structure, then repeatedly extracts the maximum element (for max-heap) or minimum element (for min-heap) and rebuilds the heap until the list is sorted.</p>
-    <p><strong>Time Complexity:</strong> O(n log n) in the average, worst, and best case.</p>
-
-    <h2>Binary Search Tree (BST)</h2>
-    <p>A Binary Search Tree (BST) is a type of binary tree that maintains a sorted order of elements, which makes searching, insertion, and deletion operations efficient.</p>
-
-    <h3>Structure:</h3>
-    <ul>
-        <li><strong>Data:</strong> The value stored in the node.</li>
-        <li><strong>Left Child:</strong> A pointer to the left subtree, which contains nodes with values less than the node's data.</li>
-        <li><strong>Right Child:</strong> A pointer to the right subtree, which contains nodes with values greater than the node's data.</li>
-    </ul>
-
-    <h3>Properties:</h3>
-    <ul>
-        <li><strong>Binary Property:</strong> Each node has at most two children.</li>
-        <li><strong>Search Property:</strong> For any given node, all elements in the left subtree are less than the node's value, and all elements in the right subtree are greater than the node's value. This property ensures that an in-order traversal (left, root, right) of the tree results in a sorted sequence of values.</li>
-    </ul>
-
-    <h3>Operations:</h3>
-    <ul>
-        <li><strong>Search:</strong> To find a value, start at the root and recursively traverse the left or right child depending on whether the value is less than or greater than the current node's value.</li>
-        <li><strong>Insertion:</strong> To insert a new value, start at the root and recursively traverse the left or right child until finding an appropriate spot where the new node can be added.</li>
-        <li><strong>Deletion:</strong> Deleting a node requires considering three cases:
-            <ul>
-                <li><strong>Node with no children (leaf node):</strong> Simply remove the node.</li>
-                <li><strong>Node with one child:</strong> Remove the node and replace it with its child.</li>
-                <li><strong>Node with two children:</strong> Find the in-order predecessor (maximum value in the left subtree) or in-order successor (minimum value in the right subtree) to replace the node, and then delete the predecessor or successor.</li>
-            </ul>
-        </li>
-    </ul>
-
-    <p><strong>Time Complexity:</strong></p>
-    <ul>
-        <li><strong>Average Case:</strong> O(log n) for search, insertion, and deletion, assuming the tree is balanced.</li>
-        <li><strong>Worst Case:</strong> O(n) for search, insertion, and deletion, when the tree becomes a degenerate (unbalanced) tree resembling a linked list.</li>
-    </ul>
-
-    <h2>Graph Algorithms</h2>
-
-    <h3>Spanning Trees</h3>
-    <p><strong>Prim's Algorithm:</strong> Used to find the Minimum Spanning Tree (MST) for a weighted, undirected graph. It starts with a single vertex and grows the spanning tree by adding the shortest edge that connects a vertex in the tree to a vertex outside the tree.</p>
-    <p><strong>Time Complexity:</strong> O(E log V) using a priority queue, where E is the number of edges and V is the number of vertices.</p>
-
-    <p><strong>Kruskal’s Algorithm:</strong></p>
-    <pre class="algorithm-title">
-int Find(int parent[], int i) {
-    if (parent[i] != i)
-        parent[i] = Find(parent, parent[i]);
-    return parent[i];
-}
-
-void Union(int parent[], int rank[], int x, int y) {
-    int xroot = Find(parent, x);
-    int yroot = Find(parent, y);
-
-    if (rank[xroot] < rank[yroot])
-        parent[xroot] = yroot;
-    else if (rank[xroot] > rank[yroot])
-        parent[yroot] = xroot;
-    else {
-        parent[yroot] = xroot;
-        rank[xroot]++;
-    }
-}
-
-void KruskalMST(Edge edges[], int E, int V) {
-    int weights[E], idx[E];
-    for (int i = 0; i < E; i++) {
-        weights[i] = edges[i].weight;
-        idx[i] = i;
-    }
-
-    MergeSort(weights, idx, 0, E - 1);
-
-    int parent[V], rank[V];
-    for (int i = 0; i < V; i++) {
-        parent[i] = i;
-        rank[i] = 0;
-    }
-
-    Edge mst[V - 1];
-    int mstSize = 0;
-
-    for (int i = 0; i < E && mstSize < V - 1; i++) {
-        Edge edge = edges[idx[i]];
-        int x = Find(parent, edge.src);
-        int y = Find(parent, edge.dest);
-
-        if (x != y) {
-            mst[mstSize++] = edge;
-            Union(parent, rank, x, y);
-        }
-    }
-
-        cout << "Edges in the Minimum Spanning Tree:\n";
-    int cost = 0;
-    for (int i = 0; i < mstSize; i++) {
-        cout << mst[i].src << " -- " << mst[i].dest << " == " << mst[i].weight << endl;
-        cost += mst[i].weight;
-    }
-    cout << "Cost = " << cost << endl;
-}
-    </pre>
-
-    <h3>Shortest Path Algorithms</h3>
-    <p><strong>Dijkstra's Algorithm:</strong> Dijkstra's algorithm finds the shortest path between two points in a graph, used in GPS navigation and routing applications.</p>
-    <pre class="algorithm-title">
-#include <iostream>
-#include <vector>
-#define MAX 9999
-using namespace std;
-
-class dijkstra {
-public:
-    int dist[100];
-    int path[100];
-    int visited[100] = {0};
-    int v;
-    int src;
-
-    void read(int cost[50][50]);
-    void initialize(int cost[50][50]);
-};
-
-void dijkstra::initialize(int cost[50][50]) {
-    for (int i = 0; i < v; i++) {
-        path[i] = src;
-        dist[i] = cost[src][i];
-        visited[i] = 0;
-    }
-    visited[src] = 1;
-}
-
-void dijkstra::read(int cost[50][50]) {
-    cout << "Enter the cost matrix:" << endl;
-    for (int i = 0; i < v; i++) {
-        for (int j = 0; j < v; j++) {
-            cin >> cost[i][j];
-        }
-    }
-}
-
-int main() {
-    int cost[50][50];
-    dijkstra d;
-
-    cout << "Enter the number of vertices: ";
-    cin >> d.v;
-
-    d.read(cost);
-
-    cout << "Enter the source vertex: ";
-    cin >> d.src;
-
-    d.initialize(cost);
-
-    cout << "Initialized distances from source: ";
-    for (int i = 0; i < d.v; i++) {
-        cout << d.dist[i] << " ";
-    }
-    cout << endl;
-
-    return 0;
-}
-              <div class="algorithm">
+    <div class="algorithm">
         <h4>1. Brute Force (Naive Approach)</h4>
         <p><strong>Description:</strong> This algorithm checks for the pattern at every possible position in the text. It slides the pattern one by one and checks for a match at each position.</p>
         <p><span class="time-complexity">Time Complexity:</span> O((n-m+1) * m) where n is the length of the text and m is the length of the pattern.</p>
@@ -330,8 +173,7 @@ int main() {
         <p><span class="time-complexity">Time Complexity:</span> Average case O(n + m), but worst case can be O(n * m) due to hash collisions.</p>
     </div>
 
-    </pre>
-     <a href="index.html">Back to Portfolio</a>
+    <a href="index.html">Back to Portfolio</a>
 
     <h2>Algorithm Design Techniques</h2>
     <ul>
@@ -344,6 +186,7 @@ int main() {
     <p>Learning how to break down complex problems into smaller components allows for better problem-solving and optimization. Balancing optimization with simplicity ensures maintainability while delivering efficient solutions. Adapting solutions across different challenges involves choosing the right algorithm for the problem at hand.</p>
 </body>
 </html>
+
 
 
 

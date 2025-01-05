@@ -33,31 +33,22 @@
 </head>
 <body>
     <h1>Algorithms and Data Structures</h1>
-    
+
     <h2>Space and Time Efficiency</h2>
     <p><strong>Importance of Analyzing Algorithmic Complexity</strong></p>
-    <p>Analyzing algorithm complexity ensures scalability and efficient handling of larger data. For example, bubble sort has <span class="algorithm-title">O(n²)</span>, while merge sort has <span class="algorithm-title">O(n log n)</span>.</p>
-    
+    <p>Analyzing algorithm complexity ensures scalability and efficient handling of larger data. For example, bubble sort has <span class="algorithm-title">O(n&sup2;)</span>, while merge sort has <span class="algorithm-title">O(n log n)</span>.</p>
+
     <h3>Orders of Growth</h3>
     <ul>
         <li><strong>O(1)</strong>: Constant time (e.g., array access)</li>
         <li><strong>O(log n)</strong>: Logarithmic time (e.g., binary search)</li>
         <li><strong>O(n)</strong>: Linear time (e.g., iterating through an array)</li>
-        <li><strong>O(n²)</strong>: Quadratic time (e.g., bubble sort)</li>
+        <li><strong>O(n&sup2;)</strong>: Quadratic time (e.g., bubble sort)</li>
     </ul>
 
     <h2>Sorting and Searching</h2>
 
     <h3>Sorting Algorithms</h3>
-    
-    <p><strong>Insertion Sort:</strong> Builds the final sorted list one item at a time by inserting elements into their correct positions.</p>
-    <p><strong>Time Complexity:</strong> O(n²) in the average and worst case, O(n) in the best case.</p>
-
-    <p><strong>Selection Sort:</strong> Repeatedly finds the minimum element from the unsorted part and moves it to the sorted part.</p>
-    <p><strong>Time Complexity:</strong> O(n²) in both average and worst case.</p>
-
-    <p><strong>Heap Sort:</strong> Converts the list into a heap and repeatedly extracts the maximum or minimum element, rebuilding the heap after each extraction.</p>
-    <p><strong>Time Complexity:</strong> O(n log n) in the best, average, and worst cases.</p>
 
     <p><strong>Bubble Sort:</strong></p>
     <pre class="algorithm-title">
@@ -68,147 +59,174 @@ ALGORITHM BubbleSort(A[0..n-1])
                 swap A[j] and A[j+1]
     </pre>
 
-    <p><strong>Merge Sort:</strong> Efficient divide-and-conquer sorting algorithm with O(n log n) time complexity.</p>
+    <p><strong>Insertion Sort:</strong></p>
+    <p>Description: Builds the final sorted list one item at a time. It takes each element from the list and inserts it into its correct position.</p>
+    <p>Time Complexity: O(n&sup2;) in the average and worst case, but O(n) in the best case.</p>
     <pre class="algorithm-title">
-ALGORITHM MergeSort(A[0..n-1])
-    if n > 1
-        ...
-    </pre>
-
-    <p><strong>Quick Sort:</strong> Another divide-and-conquer algorithm that selects a pivot and partitions the array.</p>
-    <pre class="algorithm-title">
-#include <iostream>
-...
-    </pre>
-
-    <h3>Searching Algorithms</h3>
-    <p><strong>Binary Search:</strong> Binary search is an efficient algorithm for finding an element in a sorted array with O(log n) time complexity.</p>
-    <pre class="algorithm-title">
-int binarySearch(const vector<int>& arr, int key) {
-    ...
-}
-    </pre>
-
-    <h2>Graph Algorithms</h2>
-
-    <h3>Spanning Trees</h3>
-    <p><strong>Prim's Algorithm:</strong> Finds the Minimum Spanning Tree (MST) by starting with a single vertex and growing the tree by adding the shortest edge connecting to an outside vertex.</p>
-    <p><strong>Time Complexity:</strong> O(E log V) using a priority queue, where E is the number of edges and V is the number of vertices.</p>
-
-    <p><strong>Kruskal’s Algorithm:</strong></p>
-    <pre class="algorithm-title">
- 
-int Find(int parent[], int i) {
-    if (parent[i] != i)
-        parent[i] = Find(parent, parent[i]);
-    return parent[i];
-}
-
-void Union(int parent[], int rank[], int x, int y) {
-    int xroot = Find(parent, x);
-    int yroot = Find(parent, y);
-
-    if (rank[xroot] < rank[yroot])
-        parent[xroot] = yroot;
-    else if (rank[xroot] > rank[yroot])
-        parent[yroot] = xroot;
-    else {
-        parent[yroot] = xroot;
-        rank[xroot]++;
-    }
-}
-
-void KruskalMST(Edge edges[], int E, int V) {
-    int weights[E], idx[E];
-    for (int i = 0; i < E; i++) {
-        weights[i] = edges[i].weight;
-        idx[i] = i;
-    }
-
-    MergeSort(weights, idx, 0, E - 1);
-
-    int parent[V], rank[V];
-    for (int i = 0; i < V; i++) {
-        parent[i] = i;
-        rank[i] = 0;
-    }
-
-    Edge mst[V - 1];
-    int mstSize = 0;
-
-    for (int i = 0; i < E && mstSize < V - 1; i++) {
-        Edge edge = edges[idx[i]];
-        int x = Find(parent, edge.src);
-        int y = Find(parent, edge.dest);
-
-        if (x != y) {
-            mst[mstSize++] = edge;
-            Union(parent, rank, x, y);
+void insertionSort(vector<int>& A) {
+    int n = A.size();
+    for (int i = 1; i < n; i++) {
+        int key = A[i];
+        int j = i - 1;
+        while (j >= 0 && A[j] > key) {
+            A[j + 1] = A[j];
+            j = j - 1;
         }
+        A[j + 1] = key;
     }
-
-    cout << "Edges in the Minimum Spanning Tree:\n";
-    int cost = 0;
-    for (int i = 0; i < mstSize; i++) {
-        cout << mst[i].src << " -- " << mst[i].dest << " == " << mst[i].weight << endl;
-        cost += mst[i].weight;
-    }
-    cout << "Cost = " << cost << endl;
 }
-    
     </pre>
 
-    <h3>Shortest Path Algorithms</h3>
-
-    <p><strong>Dijkstra's Algorithm:</strong> Finds the shortest path between two points in a graph.</p>
+    <p><strong>Selection Sort:</strong></p>
+    <p>Description: Repeatedly finds the minimum element from the unsorted part of the list and moves it to the sorted part.</p>
+    <p>Time Complexity: O(n&sup2;) in the average and worst case.</p>
     <pre class="algorithm-title">
-#include <iostream>
-...
+void selectionSort(vector<int>& A) {
+    int n = A.size();
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (A[j] < A[minIndex]) {
+                minIndex = j;
+            }
+        }
+        swap(A[i], A[minIndex]);
+    }
+}
     </pre>
 
-    <p><strong>Bellman-Ford Algorithm:</strong> Computes shortest paths from a single source vertex, handling graphs with negative weights.</p>
-    <p><strong>Time Complexity:</strong> O(VE), where V is the number of vertices and E is the number of edges.</p>
+    <p><strong>Heap Sort:</strong></p>
+    <p>Description: Converts the list into a heap data structure, then repeatedly extracts the maximum element (for max-heap) or minimum element (for min-heap) and rebuilds the heap until the list is sorted.</p>
+    <p>Time Complexity: O(n log n) in the average, worst, and best case.</p>
+    <pre class="algorithm-title">
+void heapify(vector<int>& A, int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
 
-    <p><strong>Floyd-Warshall Algorithm:</strong> A dynamic programming algorithm for finding shortest paths between all pairs of vertices.</p>
-    <p><strong>Time Complexity:</strong> O(V³), where V is the number of vertices.</p>
+    if (left < n && A[left] > A[largest])
+        largest = left;
 
-    <h3>Traversal Algorithms</h3>
-    <p><strong>Breadth-First Search (BFS):</strong> Explores nodes layer by layer, visiting all neighbors before moving deeper.</p>
-    <p><strong>Depth-First Search (DFS):</strong> Explores as far as possible along each branch before backtracking.</p>
+    if (right < n && A[right] > A[largest])
+        largest = right;
 
-    <h3>Comparison of BFS and DFS:</h3>
+    if (largest != i) {
+        swap(A[i], A[largest]);
+        heapify(A, n, largest);
+    }
+}
+
+void heapSort(vector<int>& A) {
+    int n = A.size();
+
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(A, n, i);
+
+    for (int i = n - 1; i > 0; i--) {
+        swap(A[0], A[i]);
+        heapify(A, i, 0);
+    }
+}
+    </pre>
+
+    <h3>Binary Search Tree (BST)</h3>
+    <p>A Binary Search Tree (BST) is a type of binary tree that maintains a sorted order of elements, which makes searching, insertion, and deletion operations efficient.</p>
+
+    <h4>Structure:</h4>
     <ul>
-        <li><strong>BFS:</strong> Uses more memory due to the queue and guarantees the shortest path in unweighted graphs.</li>
-        <li><strong>DFS:</strong> Uses less memory due to the stack (or recursion) and can be more efficient in scenarios like puzzles.</li>
+        <li><strong>Data:</strong> The value stored in the node.</li>
+        <li><strong>Left Child:</strong> A pointer to the left subtree, which contains nodes with values less than the node's data.</li>
+        <li><strong>Right Child:</strong> A pointer to the right subtree, which contains nodes with values greater than the node's data.</li>
     </ul>
 
-    <h2>Pattern Searching Algorithms</h2>
-
-    <p><strong>Brute Force (Naive Approach):</strong> Checks for the pattern at every possible position in the text.</p>
-    <p><strong>Time Complexity:</strong> O((n - m + 1) * m), where n is the length of the text and m is the length of the pattern.</p>
-
-    <p><strong>Knuth-Morris-Pratt (KMP) Algorithm:</strong> Preprocesses the pattern to skip unnecessary comparisons.</p>
-    <p><strong>Time Complexity:</strong> O(n + m).</p>
-
-    <p><strong>Boyer-Moore Algorithm:</strong> Uses heuristics to skip sections of the text, improving search speed.</p>
-    <p><strong>Time Complexity:</strong> Best case O(n/m); worst case O(n * m).</p>
-
-    <p><strong>Rabin-Karp Algorithm:</strong> Uses hashing to search for patterns efficiently.</p>
-    <p><strong>Time Complexity:</strong> Average case O(n + m); worst case O(n * m) due to hash collisions.</p>
-
-    <h2>Algorithm Design Techniques</h2>
+    <h4>Properties:</h4>
     <ul>
-        <li><strong>Divide and Conquer:</strong> Breaks problems into smaller sub-problems.</li>
-        <li><strong>Greedy Algorithms:</strong> Makes the best choice at each step.</li>
-        <li><strong>Dynamic Programming:</strong> Solves problems by storing results of overlapping subproblems.</li>
+        <li><strong>Binary Property:</strong> Each node has at most two children.</li>
+        <li><strong>Search Property:</strong> For any given node, all elements in the left subtree are less than the node's value, and all elements in the right subtree are greater than the node's value.</li>
+        <li>This property ensures that an in-order traversal (left, root, right) of the tree results in a sorted sequence of values.</li>
     </ul>
 
-    <h2>Reflections</h2>
-    <p>Learning how to break down complex problems into smaller components allows for better problem-solving and optimization. Balancing optimization with simplicity ensures maintainability while delivering efficient solutions. Adapting solutions across different challenges involves choosing the right algorithm for the problem at hand.</p>
+    <h4>Operations:</h4>
+    <p><strong>Search:</strong> To find a value, start at the root and recursively traverse the left or right child depending on whether the value is less than or greater than the current node's value.</p>
+
+    <p><strong>Insertion:</strong> To insert a new value, start at the root and recursively traverse the left or right child until finding an appropriate spot where the new node can be added.</p>
+
+    <p><strong>Deletion:</strong> Deleting a node requires considering three cases:</p>
+    <ul>
+        <li>Node with no children (leaf node): Simply remove the node.</li>
+        <li>Node with one child: Remove the node and replace it with its child.</li>
+        <li>Node with two children: Find the in-order predecessor (maximum value in the left subtree) or in-order successor (minimum value in the right subtree) to replace the node, and then delete the predecessor or successor.</li>
+    </ul>
+
+    <p><strong>Time Complexity:</strong></p>
+    <ul>
+        <li>Average Case: O(log n) for search, insertion, and deletion, assuming the tree is balanced.</li>
+        <li>Worst Case: O(n) for search, insertion, and deletion, when the tree becomes a degenerate (unbalanced) tree resembling a linked list.</li>
+    </ul>
+
+    <pre class="algorithm-title">
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+Node* insert(Node* root, int key) {
+    if (root == nullptr) return new Node(key);
+    if (key < root->data)
+        root->left = insert(root->left, key);
+    else if (key > root->data)
+        root->right = insert(root->right, key);
+    return root;
+}
+
+Node* search(Node* root, int key) {
+    if (root == nullptr || root->data == key)
+        return root;
+    if (key < root->data)
+        return search(root->left, key);
+    return search(root->right, key);
+}
+
+Node* minValueNode(Node* node) {
+    Node* current = node;
+    while (current && current->left != nullptr)
+        current = current->left;
+    return current;
+}
+
+Node* deleteNode(Node* root, int key) {
+    if (root == nullptr) return root;
+
+    if (key < root->data)
+        root->left = deleteNode(root->left, key);
+    else if (key > root->data)
+        root->right = deleteNode(root->right, key);
+    else {
+        if (root->left == nullptr) {
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        } else if (root->right == nullptr) {
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        Node* temp = minValueNode(root->right);
+        root->data = temp->data;
+        root->right = deleteNode(root->right, temp->data);
+    }
+    return root;
+}
+    </pre>
 
     <a href="index.html">Back to Portfolio</a>
+
 </body>
 </html>
+
 
 
 

@@ -134,6 +134,24 @@ int main() {
     return 0;
 }
     </pre>
+    
+    <p><strong>Insertion Sort:</strong></p>
+    <pre class="algorithm-title">
+Description: Builds the final sorted list one item at a time. It takes each element from the list and inserts it into its correct position.
+Time Complexity: O(n^2) in the average and worst case, but O(n) in the best case.
+    </pre>
+    
+    <p><strong>Selection Sort:</strong></p>
+    <pre class="algorithm-title">
+Description: Repeatedly finds the minimum element from the unsorted part of the list and moves it to the sorted part.
+Time Complexity: O(n^2) in the average and worst case.
+    </pre>
+    
+    <p><strong>Heap Sort:</strong></p>
+    <pre class="algorithm-title">
+Description: Converts the list into a heap data structure, then repeatedly extracts the maximum element (for max-heap) or minimum element (for min-heap) and rebuilds the heap until the list is sorted.
+Time Complexity: O(n log n) in the average, worst, and best case.
+    </pre>
 
     <h3>Searching Algorithms</h3>
     <p><strong>Binary Search:</strong> Binary search is an efficient algorithm for finding an element in a sorted array with O(log n) time complexity.</p>
@@ -200,91 +218,4 @@ void KruskalMST(Edge edges[], int E, int V) {
 
         if (x != y) {
             mst[mstSize++] = edge;
-            Union(parent, rank, x, y);
-        }
-    }
-
-    cout << "Edges in the Minimum Spanning Tree:\n";
-    int cost = 0;
-    for (int i = 0; i < mstSize; i++) {
-        cout << mst[i].src << " -- " << mst[i].dest << " == " << mst[i].weight << endl;
-        cost += mst[i].weight;
-    }
-    cout << "Cost = " << cost << endl;
-}
-    </pre>
-
-    <h3>Shortest Path Algorithms</h3>
-    <p><strong>Dijkstra's Algorithm:</strong> Dijkstra's algorithm finds the shortest path between two points in a graph, used in GPS navigation and routing applications.</p>
-    <pre class="algorithm-title">
-#include <iostream>
-#include <vector>
-#define MAX 9999
-using namespace std;
-
-class dijkstra {
-public:
-    int dist[100];
-    int path[100];
-    int visited[100] = {0};
-    int v;
-    int src;
-
-    void read(int cost[50][50]);
-    void initialize(int cost[50][50]);
-};
-
-void dijkstra::initialize(int cost[50][50]) {
-    for (int i = 0; i < v; i++) {
-        path[i] = src;
-        dist[i] = cost[src][i];
-        visited[i] = 0;
-    }
-    visited[src] = 1;
-}
-
-void dijkstra::read(int cost[50][50]) {
-    cout << "Enter the cost matrix:" << endl;
-    for (int i = 0; i < v; i++) {
-        for (int j = 0; j < v; j++) {
-            cin >> cost[i][j];
-        }
-    }
-}
-
-int main() {
-    int cost[50][50];
-    dijkstra d;
-
-    cout << "Enter the number of vertices: ";
-    cin >> d.v;
-
-    d.read(cost);
-
-    cout << "Enter the source vertex: ";
-    cin >> d.src;
-
-    d.initialize(cost);
-
-    cout << "Initialized distances from source: ";
-    for (int i = 0; i < d.v; i++) {
-        cout << d.dist[i] << " ";
-    }
-    cout << endl;
-
-    return 0;
-}
-    </pre>
-     <a href="index.html">Back to Portfolio</a>
-
-    <h2>Algorithm Design Techniques</h2>
-    <ul>
-        <li><strong>Divide and Conquer:</strong> Breaks problems into smaller sub-problems, solves them independently, and combines results.</li>
-        <li><strong>Greedy Algorithms:</strong> Makes the best choice at each step in the hope of finding the global optimum.</li>
-        <li><strong>Dynamic Programming:</strong> Solves problems by storing the results of overlapping subproblems to avoid redundant work.</li>
-    </ul>
-
-    <h2>Reflections</h2>
-    <p>Learning how to break down complex problems into smaller components allows for better problem-solving and optimization. Balancing optimization with simplicity ensures maintainability while delivering efficient solutions. Adapting solutions across different challenges involves choosing the right algorithm for the problem at hand.</p>
-</body>
-</html>
+            Union(parent, rank, x, y[_{{{CITATION{{{_1{](https://github.com/anwaar12345/jquery/tree/f9415fa9d38b1d444038cf82e3975875244e4c05/algos.php)[_{{{CITATION{{{_2{](https://github.com/xiangXiang1024/algorithm-review/tree/89f7ec9ca69d51e0ac4d1da4498f915eac058d89/PPT%2F2%20%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3.md)[_{{{CITATION{{{_3{](https://github.com/UsoEwin/leetcode/tree/b1b3bed044be45ebc88112086f6ee42c57a28674/lc%2F658.cpp)[_{{{CITATION{{{_4{](https://github.com/Ravi-Maurya/Competitive_Programming/tree/e1e4a24cb7cc8833236e1b460d7018aad587f4b3/Interview_Bit%2FGraph_data_structure_and_algorithm%2FCommutable_islands.cpp)

@@ -92,6 +92,48 @@ ALGORITHM Merge(B[0...p-1], C[0...q-1], A[0...p+q-1])
     else
         copy B[i...p - 1] to A[k...p + q - 1]
     </pre>
+            <p><strong>Quick Sort:</strong> Another divide-and-conquer algorithm that selects a pivot and partitions the array.</p>
+    <pre class="algorithm-title">
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int partition(vector<int>& A, int l, int r) {
+    int p = A[l];
+    int i = l;
+    int j = r + 1;
+    while (true) {
+        do {
+            i++;
+        } while (i <= r && A[i] < p);
+
+        do {
+            j--;
+        } while (A[j] > p);
+
+        if (i >= j) break;
+        swap(A[i], A[j]);
+    }
+    swap(A[l], A[j]);
+    return j;
+}
+
+void quickSort(vector<int>& A, int l, int r) {
+    if (l < r) {
+        int s = partition(A, l, r);
+        quickSort(A, l, s - 1);
+        quickSort(A, s + 1, r);
+    }
+}
+
+int main() {
+    vector<int> A = {10, 7, 8, 9, 1, 5};
+    quickSort(A, 0, A.size() - 1);
+    for (int x : A) cout << x << " ";
+    return 0;
+}
+    </pre>
+
 
     <p><strong>Insertion Sort:</strong> Builds the final sorted list one item at a time. It takes each element from the list and inserts it into its correct position.</p>
     <p><strong>Time Complexity:</strong> O(n²) in the average and worst case, but O(n) in the best case.</p>
@@ -264,6 +306,30 @@ int main() {
 
     return 0;
 }
+              <div class="algorithm">
+        <h4>1. Brute Force (Naive Approach)</h4>
+        <p><strong>Description:</strong> This algorithm checks for the pattern at every possible position in the text. It slides the pattern one by one and checks for a match at each position.</p>
+        <p><span class="time-complexity">Time Complexity:</span> O((n-m+1) * m) where n is the length of the text and m is the length of the pattern.</p>
+    </div>
+
+    <div class="algorithm">
+        <h4>2. Knuth-Morris-Pratt (KMP) Algorithm</h4>
+        <p><strong>Description:</strong> KMP preprocesses the pattern to create a partial match table (also known as the "longest prefix suffix" (LPS) array). This allows the algorithm to skip portions of the text without rechecking characters, making it more efficient.</p>
+        <p><span class="time-complexity">Time Complexity:</span> O(n + m) where n is the length of the text and m is the length of the pattern.</p>
+    </div>
+
+    <div class="algorithm">
+        <h4>3. Boyer-Moore Algorithm</h4>
+        <p><strong>Description:</strong> Boyer-Moore uses two main heuristics (the Bad Character Heuristic and the Good Suffix Heuristic) to skip sections of the text, moving from right to left. This makes the search faster by potentially skipping large sections of the text.</p>
+        <p><span class="time-complexity">Time Complexity:</span> Best case is O(n/m), but in the worst case it is O(n * m). Average performance is often better than KMP.</p>
+    </div>
+
+    <div class="algorithm">
+        <h4>4. Rabin-Karp Algorithm</h4>
+        <p><strong>Description:</strong> Rabin-Karp uses hashing to find any one of a set of pattern strings in a text. It computes a hash for the pattern and a hash for a substring of the text, and compares these hashes. If the hashes match, it then checks for exact matching to avoid false positives.</p>
+        <p><span class="time-complexity">Time Complexity:</span> Average case O(n + m), but worst case can be O(n * m) due to hash collisions.</p>
+    </div>
+
     </pre>
      <a href="index.html">Back to Portfolio</a>
 
